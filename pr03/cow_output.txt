@@ -1,7 +1,7 @@
-Родитель PID=2024 создал список из 1000000 чисел
-Ребёнок до изменения: VmRSS=48084 kB, Shared_Dirty=43476 kB, Private_Dirty=732 kB
-Ребёнок после изменения: VmRSS=48336 kB, Shared_Dirty=4232 kB, Private_Dirty=39976 kB
+Родитель PID=2185 создал список из 1000000 чисел
+Ребёнок до изменения: VmRSS=48092 kB, Shared_Dirty=43488 kB, Private_Dirty=728 kB
+Ребёнок после изменения: VmRSS=48344 kB, Shared_Dirty=4248 kB, Private_Dirty=39968 kB
 Контрольная сумма ребёнка: 500000500000
-Родитель после завершения ребёнка: VmRSS=51152 kB, Shared_Dirty=0 kB, Private_Dirty=44208 kB
+Родитель после завершения ребёнка: VmRSS=51160 kB, Shared_Dirty=0 kB, Private_Dirty=44216 kB
 Контрольная сумма родителя: 499999500000
 Списки различаются: ребёнок изменил свою копию, родитель — нет.

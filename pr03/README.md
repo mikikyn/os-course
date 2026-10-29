@@ -38,31 +38,31 @@ python3 cow.py
 
 ```text
 === ПР-3, вариант B: процессы в Linux ===
-Thu Oct 29 15:36:44 +05 2026
+Thu Oct 29 16:15:10 +05 2026
 $ python3 --version
 Python 3.14.4
 
 $ python3 ptree.py
 PID=310 PPID=308 STATE=S RSS=5732 kB CMD=bash
-  PID=1989 PPID=310 STATE=S RSS=3624 kB CMD=bash
-    PID=1992 PPID=1989 STATE=S RSS=7604 kB CMD=tee
-    PID=1995 PPID=1989 STATE=R RSS=13656 kB CMD=python3
+  PID=2150 PPID=310 STATE=S RSS=3696 kB CMD=bash
+    PID=2153 PPID=2150 STATE=S RSS=7732 kB CMD=tee
+    PID=2156 PPID=2150 STATE=R RSS=13704 kB CMD=python3
 PID=426 PPID=1 STATE=S RSS=13384 kB CMD=systemd
   PID=428 PPID=426 STATE=S RSS=4092 kB CMD=(sd-pam)
 PID=616 PPID=543 STATE=S RSS=5412 kB CMD=bash
 
 $ python3 runner.py 3 /bin/sleep 1
-Родитель PID=1997 создал 3 процессов: 1998, 1999, 2000
-PID=1998 завершился: код=0, время=1.044 с
-PID=1999 завершился: код=0, время=1.043 с
-PID=2000 завершился: код=0, время=1.042 с
+Родитель PID=2158 создал 3 процессов: 2159, 2160, 2161
+PID=2159 завершился: код=0, время=1.015 с
+PID=2160 завершился: код=0, время=1.016 с
+PID=2161 завершился: код=0, время=1.015 с
 
 $ python3 zombie.py  # одновременно снимаем вывод ps
 $ ps -o pid,ppid,stat,cmd -p РОДИТЕЛЬ,РЕБЁНОК
     PID    PPID STAT CMD
-   2001    1989 S+   python3 zombie.py
-   2003    2001 Z+   [python3] <defunct>
-Родитель PID=2001, ребёнок PID=2003
+   2162    2150 S+   python3 zombie.py
+   2164    2162 Z+   [python3] <defunct>
+Родитель PID=2162, ребёнок PID=2164
 Ребёнок завершается, но родитель пока не вызывает waitpid...
 Состояние ребёнка до waitpid: Z (zombie)
 Состояние после waitpid: процесс уже убран
@@ -70,19 +70,19 @@ $ ps -o pid,ppid,stat,cmd -p РОДИТЕЛЬ,РЕБЁНОК
 $ python3 orphan.py  # одновременно снимаем вывод ps
 $ ps -o pid,ppid,stat,cmd -p СИРОТА
     PID    PPID STAT CMD
-   2012     308 S+   python3 orphan.py
-Ребёнок PID=2012, начальный PPID=2010
-Родитель PID=2010, ребёнок PID=2012
-Родитель PID=2010 завершается первым
-Ребёнок PID=2012 после ухода родителя: PPID=308
-Ребёнок PID=2012 завершается
+   2173     308 S+   python3 orphan.py
+Ребёнок PID=2173, начальный PPID=2171
+Родитель PID=2171, ребёнок PID=2173
+Родитель PID=2171 завершается первым
+Ребёнок PID=2173 после ухода родителя: PPID=308
+Ребёнок PID=2173 завершается
 
 $ python3 cow.py
-Родитель PID=2024 создал список из 1000000 чисел
-Ребёнок до изменения: VmRSS=48084 kB, Shared_Dirty=43476 kB, Private_Dirty=732 kB
-Ребёнок после изменения: VmRSS=48336 kB, Shared_Dirty=4232 kB, Private_Dirty=39976 kB
+Родитель PID=2185 создал список из 1000000 чисел
+Ребёнок до изменения: VmRSS=48092 kB, Shared_Dirty=43488 kB, Private_Dirty=728 kB
+Ребёнок после изменения: VmRSS=48344 kB, Shared_Dirty=4248 kB, Private_Dirty=39968 kB
 Контрольная сумма ребёнка: 500000500000
-Родитель после завершения ребёнка: VmRSS=51152 kB, Shared_Dirty=0 kB, Private_Dirty=44208 kB
+Родитель после завершения ребёнка: VmRSS=51160 kB, Shared_Dirty=0 kB, Private_Dirty=44216 kB
 Контрольная сумма родителя: 499999500000
 Списки различаются: ребёнок изменил свою копию, родитель — нет.
 
