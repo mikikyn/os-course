@@ -1,0 +1,42 @@
+=== ПР-1, вариант B: настройка пользователей и прав ===
+Thu Oct 29 14:36:15 +05 2026
+Основной пользователь: miki
+
+$ git --version
+git version 2.53.0
+$ python3 --version
+Python 3.14.4
+
+$ sudo groupadd developers  # выполняется только если группы ещё нет
+developers:x:1001:student2
+$ sudo adduser --disabled-password --gecos "" student2  # если пользователя ещё нет
+$ sudo usermod -aG developers student2
+$ id student2
+uid=1002(student2) gid=1002(student2) groups=1002(student2),100(users),1001(developers)
+
+$ sudo mkdir -p /srv/shared
+$ sudo chown root:developers /srv/shared
+$ sudo chmod 2775 /srv/shared
+$ ls -ld /srv/shared
+drwxrwsr-x 2 root developers 4096 Oct 29 13:51 /srv/shared
+$ stat -c "владелец=%U группа=%G права=%a" /srv/shared
+владелец=root группа=developers права=2775
+
+$ sudo -u student2 bash -c "umask 002; echo ... > /srv/shared/student2.txt"
+$ ls -l /srv/shared/student2.txt
+-rw-rw-r-- 1 student2 developers 59 Oct 29 14:36 /srv/shared/student2.txt
+$ stat -c "владелец=%U группа=%G права=%a" /srv/shared/student2.txt
+владелец=student2 группа=developers права=664
+
+$ sudo -u miki rm /srv/shared/student2.txt
+rm: cannot remove '/srv/shared/student2.txt': Permission denied
+Код возврата rm: 1
+
+$ # Добавление двух alias и переменной окружения в ~/.bashrc
+$ # Проверка в новой интерактивной bash-сессии
+alias ll='ls -alF'
+alias gs='git status --short'
+OS_COURSE=operating-systems
+
+=== Автоматическая проверка ===
+OK: пользователь, группа, права, общий файл, aliases и переменная настроены.
