@@ -1,0 +1,55 @@
+=== ПР-2, вариант B: Bash и системные вызовы ===
+Thu Oct 29 15:12:04 +05 2026
+$ python3 --version
+Python 3.14.4
+$ strace --version | head -n 1
+strace -- version 6.19
+
+$ bash report.sh data ERROR
+МОДУЛЬ                СООБЩЕНИЙ
+-------------------- ----------
+auth                        124
+api                         122
+cache                       122
+db                          111
+net                          99
+
+$ bash report.sh data WARN --top 3
+МОДУЛЬ                СООБЩЕНИЙ
+-------------------- ----------
+cache                       140
+db                          136
+api                         118
+
+$ bash report.sh  # проверка запуска без аргументов
+Использование:
+  bash report.sh КАТАЛОГ УРОВЕНЬ [--top N]
+
+Аргументы:
+  КАТАЛОГ   каталог с файлами *.log
+  УРОВЕНЬ   ERROR или WARN
+  --top N   показать только первые N модулей
+
+Пример:
+  bash report.sh data ERROR --top 3
+Код возврата без аргументов: 1
+
+$ python3 hello.py data/01.log
+Файл: data/01.log
+Размер: 4416 байт
+
+$ strace -f -o trace.txt python3 hello.py data/01.log
+Файл: data/01.log
+Размер: 4416 байт
+$ strace -f -o trace_cat.txt cat data/01.log
+
+$ python3 analyze_trace.py --python-trace trace.txt --cat-trace trace_cat.txt --sample data/01.log
+Python hello.py — всего системных вызовов: 1071
+Из них открытие, чтение и закрытие 01.log: 4 (openat, read, read, close)
+cat — всего системных вызовов: 143
+Из них открытие, чтение и закрытие 01.log: 2
+Разница общего числа вызовов Python и cat: 928
+Остальные вызовы Python нужны для запуска интерпретатора, загрузки библиотек и модулей, выделения памяти и настройки среды выполнения.
+
+=== Автоматическая проверка ===
+OK: report.sh, --top, код возврата, hello.py и обе трассировки проверены.
