@@ -1,0 +1,15 @@
+=== ПР-8, вариант B: взаимоблокировки ===
+Thu Oct 29 20:32:00 +05 2026
+$ python3 --version
+Python 3.14.4
+
+$ python3 banker.py bank1.txt
+SAFE, P1 P3 P4 P0 P2
+Traceback (most recent call last):
+  File "/home/miki/os-course/pr08/banker.py", line 114, in <module>
+    main()
+    ~~~~^^
+  File "/home/miki/os-course/pr08/banker.py", line 102, in main
+    for raw in sys.stdin:
+               ^^^^^^^^^
+KeyboardInterrupt
